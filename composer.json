@@ -1,0 +1,15 @@
+{
+    "name": "sofija/channelengine",
+    "autoload": {
+        "psr-4": {
+            "Sofija\\Channelengine\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sofija Dokmanovic",
+            "email": "sofija.dokmanovic@logeecom.com"
+        }
+    ],
+    "require": {}
+}
