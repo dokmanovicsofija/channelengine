@@ -60,21 +60,28 @@ class ChannelEngine extends Module
         return true;
     }
 
-    public function hookDisplayBackOfficeHeader()
+    public function hookDisplayBackOfficeHeader(): void
     {
         if (Tools::getValue('controller') == 'AdminChannelEngine') {
-            $this->context->controller->addCSS($this->_path . 'views/css/back.css');
-            $this->context->controller->addJS($this->_path . 'views/js/back.js');
+            $this->context->controller->addCSS($this->_path . 'views/css/admin.css');
+            $this->context->controller->addJS($this->_path . 'views/js/admin.js');
         }
     }
 
+    /**
+     * @throws SmartyException
+     */
     public function getContent()
     {
-        $this->context->smarty->assign(array(
-            'module_dir' => $this->_path,
-            'some_variable' => 'This is some dynamic content',
-        ));
+        $this->context->smarty->assign('module_dir', $this->_path);
 
-        return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
+        $output = $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
+
+        // Fetch login.tpl (modal) and append it to the output
+        $output .= $this->context->smarty->fetch($this->local_path . 'views/templates/admin/login.tpl');
+
+        return $output;
+
+//        return $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
     }
 }
