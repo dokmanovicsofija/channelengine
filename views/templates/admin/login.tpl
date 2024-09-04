@@ -1,8 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{$module_dir}views/css/login.css">
 
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
+<div class="panel">
+    <div class="panel-body">
         <h4>Login to ChannelEngine</h4>
         <form id="loginForm">
             <div class="form-group">
