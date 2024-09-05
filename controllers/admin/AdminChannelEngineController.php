@@ -70,7 +70,7 @@ class AdminChannelEngineController extends ModuleAdminController
      *
      * @throws SmartyException If there is an issue rendering the Smarty template
      */
-    protected function displayLogin(): void
+    protected function displayLogin($errorMessage = null): void
     {
         $loginUrl = $this->context->link->getAdminLink('AdminChannelEngine') . '&action=displayLogin';
 
@@ -79,8 +79,67 @@ class AdminChannelEngineController extends ModuleAdminController
             'login_url' => $loginUrl,
         ]);
 
+        if ($errorMessage) {
+            $this->context->smarty->assign('error', $errorMessage);
+        }
+
         $output = $this->context->smarty->fetch($this->module->getLocalPath() . 'views/templates/admin/login.tpl');
         $this->context->smarty->assign('content', $output);
+        $this->setTemplate('content.tpl');
+    }
+
+    /**
+     * Process the login form submission and validate the API key.
+     * @throws SmartyException
+     */
+    public function processLogin(): void
+    {
+        $accountName = Tools::getValue('account_name');
+        $apiKey = Tools::getValue('api_key');
+
+        if (empty($accountName) || empty($apiKey)) {
+            $this->displayLogin('Account name and API key cannot be empty.');
+            return;
+        }
+
+        $url = 'https://logeecom-1-dev.channelengine.net/api/v2/settings?apikey=' . $apiKey;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPGET, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['accept: application/json']);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $responseData = json_decode($response, true);
+
+        if ($responseData['StatusCode'] == 200 && $responseData['Success'] === true) {
+            Configuration::updateValue('CHANNELENGINE_ACCOUNT_NAME', $accountName);
+            Configuration::updateValue('CHANNELENGINE_API_KEY', $apiKey);
+
+            Tools::redirectAdmin($this->context->link->getAdminLink('AdminChannelEngine') . '&action=syncPage');
+        } else {
+            $this->displayLogin('Login failed. Please check your credentials.');
+        }
+    }
+
+    /**
+     * Display the sync page (after successful login).
+     * @throws SmartyException
+     */
+    public function syncPage(): void
+    {
+        $this->context->smarty->assign([
+            'module_dir' => $this->module->getPathUri(),
+            'sync_status' => 'In progress...',
+        ]);
+
+        $output = $this->context->smarty->fetch($this->module->getLocalPath() . 'views/templates/admin/sync.tpl');
+
+        $this->context->smarty->assign('content', $output);
+
         $this->setTemplate('content.tpl');
     }
 }

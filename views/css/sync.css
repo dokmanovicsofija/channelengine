@@ -40,3 +40,13 @@
     margin-top: 20px;
     font-size: 16px;
 }
+
+#progressBar {
+    width: 0;
+    background-color: blue;
+    height: 20px;
+}
+
+#progressBarContainer {
+    margin-top: 20px;
+}

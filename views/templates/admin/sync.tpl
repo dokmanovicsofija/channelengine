@@ -4,6 +4,9 @@
     <div class="panel-body">
         <h4>Synchronization Status</h4>
 
+{*        <p id="syncStatus">*}
+{*            Sync Status: <span id="syncStatusText">Waiting...</span>*}
+{*        </p>*}
         <p id="syncStatus">
             Sync Status:
             <span class="status-done">Done</span> |
