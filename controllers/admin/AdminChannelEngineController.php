@@ -1,5 +1,12 @@
 <?php
 
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+
+/** @noinspection PhpIncludeInspection */
+require_once rtrim(_PS_MODULE_DIR_, '/') . '/channelengine/vendor/autoload.php';
+
 /**
  * Controller for the AdminChannelEngine section of the module.
  * It extends the ModuleAdminController and provides functionality
