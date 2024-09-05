@@ -1,26 +1,79 @@
 <?php
 
+/**
+ * Controller for the AdminChannelEngine section of the module.
+ * It extends the ModuleAdminController and provides functionality
+ * for handling specific actions within the module, such as displaying the login and configuration pages.
+ */
 class AdminChannelEngineController extends ModuleAdminController
 {
+    /**
+     * Class constructor.
+     * Enables Bootstrap for the PrestaShop admin panel and calls the parent constructor.
+     * @throws PrestaShopException
+     */
     public function __construct()
     {
         $this->bootstrap = true;
         parent::__construct();
     }
 
-    public function initContent()
+    /**
+     * Initializes the content for the page.
+     * This method checks which action to perform based on the 'action' parameter
+     * passed in the request. If the method exists, it is executed; otherwise, the defaultAction is called.
+     *
+     * @throws SmartyException If there is an issue rendering the Smarty template
+     */
+    public function initContent(): void
     {
-        $this->display = 'view';
-        parent::initContent();
-        $this->context->smarty->assign(array(
-            'module_dir' => $this->module->getPathUri(),
-        ));
-        $this->setTemplate('admin/configure.tpl');
+        $action = Tools::getValue('action', 'defaultAction');
 
-        Tools::redirectAdmin(
-            $this->context->link->getAdminLink('AdminModules')
-            . '&configure=' . $this->module->name
-            . '&token=' . Tools::getAdminTokenLite('AdminModules')
-        );
+        if (method_exists($this, $action)) {
+            $this->$action();
+        } else {
+            $this->defaultAction();
+        }
+    }
+
+    /**
+     * Default action to be executed when no specific action is provided.
+     * This method prepares the configuration page, assigns the necessary variables to Smarty,
+     * and renders the 'configure.tpl' template.
+     *
+     * @throws SmartyException If there is an issue rendering the Smarty template
+     */
+    protected function defaultAction(): void
+    {
+        $loginUrl = $this->context->link->getAdminLink('AdminChannelEngine') . '&action=displayLogin';
+
+        $this->context->smarty->assign([
+            'module_dir' => $this->module->getPathUri(),
+            'login_url' => $loginUrl,
+        ]);
+
+        $output = $this->context->smarty->fetch($this->module->getLocalPath() . 'views/templates/admin/configure.tpl');
+        $this->context->smarty->assign('content', $output);
+        $this->setTemplate('content.tpl');
+    }
+
+    /**
+     * Displays the login page for the module.
+     * This method assigns necessary variables and renders the 'login.tpl' template.
+     *
+     * @throws SmartyException If there is an issue rendering the Smarty template
+     */
+    protected function displayLogin(): void
+    {
+        $loginUrl = $this->context->link->getAdminLink('AdminChannelEngine') . '&action=displayLogin';
+
+        $this->context->smarty->assign([
+            'module_dir' => $this->module->getPathUri(),
+            'login_url' => $loginUrl,
+        ]);
+
+        $output = $this->context->smarty->fetch($this->module->getLocalPath() . 'views/templates/admin/login.tpl');
+        $this->context->smarty->assign('content', $output);
+        $this->setTemplate('content.tpl');
     }
 }
