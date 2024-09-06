@@ -162,7 +162,23 @@ class ProductDomainModel
         return $this->quantity;
     }
 
-    // Convert object to array
+    /**
+     * Converts the ProductDomainModel object into an associative array.
+     *
+     * This method is used to transform the current product's domain model
+     * into an array format, which can then be utilized for various purposes,
+     * such as JSON encoding or sending data to an external API.
+     *
+     * @return array An associative array where each key corresponds to a product property:
+     *  - 'id': The product's unique identifier.
+     *  - 'name': The name of the product.
+     *  - 'description': The description of the product.
+     *  - 'price': The price of the product.
+     *  - 'brand': The brand name of the product.
+     *  - 'ean': The EAN (European Article Number) code of the product.
+     *  - 'image_url': The URL of the product's image.
+     *  - 'quantity': The available quantity of the product.
+     */
     public function toArray(): array
     {
         return [
