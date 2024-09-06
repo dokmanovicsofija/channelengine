@@ -111,6 +111,7 @@ class ChannelEngine extends Module
             $this->context->controller->addCSS($this->_path . 'views/css/admin.css');
             $this->context->controller->addCSS($this->_path . 'views/css/login.css');
             $this->context->controller->addJS($this->_path . 'views/js/sync.js');
+            $this->context->controller->addCSS($this->_path . 'views/css/sync.css');
         }
     }
 

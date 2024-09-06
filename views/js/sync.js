@@ -2,7 +2,7 @@ document.getElementById('syncButton').addEventListener('click', function () {
     document.getElementById('syncStatusText').textContent = 'In progress...';
     document.getElementById('syncStatusText').className = 'status-progress';
 
-    const syncUrl = admin_sync_link + '&action=syncProducts';
+    const syncUrl = admin_sync_link;
 
     fetch(syncUrl, {
         method: 'POST',

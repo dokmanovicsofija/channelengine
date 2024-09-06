@@ -56,6 +56,7 @@ class AdminChannelEngineController extends ModuleAdminController
         if (Configuration::hasKey('CHANNELENGINE_ACCOUNT_NAME')) {
             Tools::redirectAdmin($this->context->link->getAdminLink('AdminChannelEngine') . '&action=syncPage');
         }
+
         $loginUrl = $this->context->link->getAdminLink('AdminChannelEngine') . '&action=displayLogin';
 
         $this->context->smarty->assign([
@@ -135,7 +136,7 @@ class AdminChannelEngineController extends ModuleAdminController
      */
     public function syncPage(): void
     {
-        $syncUrl = $this->context->link->getAdminLink('AdminChannelEngine') . '&action=syncProducts';
+        $syncUrl = $this->context->link->getAdminLink('AdminProduct') . '&action=startSync';
 
         $this->context->smarty->assign([
             'module_dir' => $this->module->getPathUri(),
@@ -149,101 +150,4 @@ class AdminChannelEngineController extends ModuleAdminController
 
         $this->setTemplate('content.tpl');
     }
-
-    public function syncProducts()
-    {
-        $syncResult = $this->syncProductsToChannelEngine();
-
-        header('Content-Type: application/json');
-        echo json_encode($syncResult);
-        exit;
-    }
-
-    public function syncProductsToChannelEngine()
-    {
-        $products = $this->getProductsFromPrestaShop();
-
-        $formattedProducts = $this->formatProductsForChannelEngine($products);
-
-        $response = $this->sendProductsToChannelEngine($formattedProducts);
-
-        if ($response['StatusCode'] == 200 && $response['Success'] === true) {
-            return ['success' => true, 'message' => 'Synchronization completed successfully.'];
-        } else {
-            return ['success' => false, 'message' => 'Synchronization failed: ' . $response['Message']];
-        }
-    }
-
-    private function getProductsFromPrestaShop()
-    {
-        $idLang = (int)Context::getContext()->language->id;
-
-        $products = Product::getProducts(
-            $idLang,
-            0,
-            0,
-            'id_product',
-            'ASC'
-        );
-
-        foreach ($products as &$product) {
-            $coverImage = Image::getCover($product['id_product']);
-            if ($coverImage) {
-                $product['image_url'] = Context::getContext()->link->getImageLink(
-                    $product['link_rewrite'],
-                    $coverImage['id_image'],
-                    'home_default'
-                );
-            } else {
-                $product['image_url'] = 'path/to/default-image.jpg';
-            }
-
-            $product['quantity'] = StockAvailable::getQuantityAvailableByProduct($product['id_product']);
-        }
-            return $products;
-        }
-
-        private
-        function formatProductsForChannelEngine($products)
-        {
-            $formattedProducts = [];
-            foreach ($products as $product) {
-                $formattedProducts[] = [
-                    'Name' => $product['name'],
-                    'Description' => $product['description_short'],
-                    'MerchantProductNo' => $product['id_product'],
-                    'Price' => $product['price'],
-                    'VatRateType' => 'STANDARD',
-                    'Brand' => $product['manufacturer_name'],
-                    'Ean' => $product['ean13'],
-                    'ManufacturerProductNumber' => $product['reference'],
-                    'CategoryTrail' => $product['id_category_default'],
-                    'ImageUrl' => $product['image_url'],
-                    'Quantity' => $product['quantity'],
-                ];
-            }
-            return $formattedProducts;
-        }
-
-        private
-        function sendProductsToChannelEngine($products)
-        {
-            $apiKey = Configuration::get('CHANNELENGINE_API_KEY');
-            $url = 'https://logeecom-1-dev.channelengine.net/api/v2/products?apikey=' . $apiKey;
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($products));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json',
-                'accept: application/json',
-            ]);
-
-            $response = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($response, true);
-        }
-    }
+}
