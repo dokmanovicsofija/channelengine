@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Utility;
+namespace classes\Utility;
 
 use Exception;
 
