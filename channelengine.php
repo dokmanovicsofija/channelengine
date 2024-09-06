@@ -1,5 +1,7 @@
 <?php
 
+use classes\Bootstrap;
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Ensure that the script is being run within PrestaShop's environment
@@ -34,8 +36,9 @@ class ChannelEngine extends Module
         $this->displayName = $this->l('channelEngine');
         $this->description = $this->l('Sofija channelEngine');
 
-        $this->ps_versions_compliancy = array('min' => '8.1', 'max' => _PS_VERSION_);
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
+
+        Bootstrap::init();
     }
 
     /**
@@ -107,7 +110,7 @@ class ChannelEngine extends Module
         if (Tools::getValue('controller') == 'AdminChannelEngine') {
             $this->context->controller->addCSS($this->_path . 'views/css/admin.css');
             $this->context->controller->addCSS($this->_path . 'views/css/login.css');
-            $this->context->controller->addJS($this->_path . 'views/js/admin.js');
+            $this->context->controller->addJS($this->_path . 'views/js/sync.js');
         }
     }
 
