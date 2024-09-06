@@ -57,7 +57,7 @@ class ProductDomainModel
      * @param string $name The name of the product.
      * @param string $description A short description of the product.
      * @param float $price The price of the product.
-     * @param string $brand The brand name of the product.
+     * @param string|null $brand The brand name of the product.
      * @param string $ean The EAN code of the product.
      * @param string $imageUrl The URL to the product's image.
      * @param int $quantity The available quantity of the product in stock.
