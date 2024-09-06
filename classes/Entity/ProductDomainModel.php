@@ -33,7 +33,7 @@ class ProductDomainModel
     /**
      * @var string The brand name of the product.
      */
-    private string $brand;
+    private ?string $brand;
 
     /**
      * @var string The EAN (European Article Number) code of the product.
@@ -67,7 +67,7 @@ class ProductDomainModel
         string $name,
         string $description,
         float $price,
-        string $brand,
+        ?string $brand,
         string $ean,
         string $imageUrl,
         int $quantity
@@ -127,7 +127,7 @@ class ProductDomainModel
      *
      * @return string The brand name of the product.
      */
-    public function getBrand(): string
+    public function getBrand(): ?string
     {
         return $this->brand;
     }
@@ -160,5 +160,20 @@ class ProductDomainModel
     public function getQuantity(): int
     {
         return $this->quantity;
+    }
+
+    // Convert object to array
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'price' => $this->getPrice(),
+            'brand' => $this->getBrand(),
+            'ean' => $this->getEan(),
+            'image_url' => $this->getImageUrl(),
+            'quantity' => $this->getQuantity(),
+        ];
     }
 }

@@ -3,6 +3,7 @@
 namespace classes\Repositories;
 
 use classes\BussinesLogicServices\RepositoryInterface\ProductRepositoryInterface;
+use classes\Entity\ProductDomainModel;
 use Context;
 use Image;
 use Product;
@@ -37,8 +38,20 @@ class ProductRepository implements ProductRepositoryInterface
                 : 'path/to/default-image.jpg';
 
             $product['quantity'] = StockAvailable::getQuantityAvailableByProduct($product['id_product']);
+
+            $domainProduct = new ProductDomainModel(
+                $product['id_product'],
+                $product['name'],
+                $product['description'],
+                $product['price'],
+                $product['manufacturer_name'],
+                $product['ean13'],
+                $product['image_url'],
+                $product['quantity']
+            );
+            $domainProducts[] = $domainProduct->toArray();
         }
 
-        return $products;
+        return $domainProducts;
     }
 }

@@ -61,14 +61,14 @@ class ProductService implements ProductSyncServiceInterface
         foreach ($products as $product) {
             $formattedProducts[] = [
                 'Name' => $product['name'],
-                'Description' => $product['description_short'],
-                'MerchantProductNo' => $product['id_product'],
+                'Description' => $product['description'],
+                'MerchantProductNo' => $product['id'],
                 'Price' => $product['price'],
                 'VatRateType' => 'STANDARD',
-                'Brand' => $product['manufacturer_name'],
-                'Ean' => $product['ean13'],
-                'ManufacturerProductNumber' => $product['reference'],
-                'CategoryTrail' => $product['id_category_default'],
+                'Brand' => $product['brand'] ?? '',
+                'Ean' => $product['ean'] ?? '',
+                'ManufacturerProductNumber' => $product['reference'] ?? '',
+                'CategoryTrail' => $product['id_category_default'] ?? '',
                 'ImageUrl' => $product['image_url'],
                 'Quantity' => $product['quantity'],
             ];
