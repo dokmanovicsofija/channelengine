@@ -2,6 +2,12 @@
 
 namespace classes;
 
+use classes\BussinesLogicServices\ProductService;
+use classes\BussinesLogicServices\RepositoryInterface\ProductRepositoryInterface;
+use classes\BussinesLogicServices\ServiceInterface\ProductSyncServiceInterface;
+use classes\Repositories\ProductRepository;
+use classes\Utility\ChannelEngineProxy;
+use classes\Utility\ServiceRegistry;
 use Exception;
 
 if (!defined('_PS_VERSION_')) {
@@ -24,9 +30,17 @@ class Bootstrap
      */
     public static function init(): void
     {
+        self::registerUtilities();
         self::registerRepositories();
         self::registerServices();
-        self::registerControllers();
+    }
+
+    /**
+     * Register utility classes like HttpClient and ChannelEngineProxy.
+     */
+    private static function registerUtilities(): void
+    {
+        ServiceRegistry::getInstance()->register(ChannelEngineProxy::class, new ChannelEngineProxy());
     }
 
     /**
@@ -34,8 +48,7 @@ class Bootstrap
      */
     protected static function registerRepositories(): void
     {
-//        ServiceRegistry::register(ProductRepositoryInterface::class, new ProductRepository());
-//        ServiceRegistry::register(LoginRepositoryInterface::class, new LoginRepository());
+        ServiceRegistry::getInstance()->register(ProductRepositoryInterface::class, new ProductRepository());
     }
 
     /**
@@ -45,28 +58,9 @@ class Bootstrap
      */
     protected static function registerServices(): void
     {
-//        ServiceRegistry::register(ProductServiceInterface::class, new ProductService(
-//            ServiceRegistry::get(ProductRepositoryInterface::class)
-//        ));
-//
-//        ServiceRegistry::register(LoginServiceInterface::class, new LoginService(
-//            ServiceRegistry::get(LoginRepositoryInterface::class)
-//        ));
-    }
-
-    /**
-     * Registers controller instances with the service registry.
-     *
-     * @throws Exception
-     */
-    protected static function registerControllers(): void
-    {
-//        ServiceRegistry::register(ProductController::class, new ProductController(
-//            ServiceRegistry::get(ProductServiceInterface::class)
-//        ));
-//
-//        ServiceRegistry::register(LoginController::class, new LoginController(
-//            ServiceRegistry::get(LoginServiceInterface::class)
-//        ));
+        ServiceRegistry::getInstance()->register(ProductSyncServiceInterface::class, new ProductService(
+            ServiceRegistry::getInstance()->get(ProductRepositoryInterface::class),
+            ServiceRegistry::getInstance()->get(ChannelEngineProxy::class)
+        ));
     }
 }
