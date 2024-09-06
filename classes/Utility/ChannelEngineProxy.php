@@ -2,6 +2,8 @@
 
 namespace classes\Utility;
 
+use Configuration;
+
 /**
  * Class ChannelEngineProxy
  *
@@ -9,43 +11,39 @@ namespace classes\Utility;
  */
 class ChannelEngineProxy
 {
-    private HttpClient $httpClient;
-    private string $apiUrl;
-    private string $apiKey;
+    protected HttpClient $httpClient;
 
     /**
      * Constructor for ChannelEngineProxy.
      *
-     * @param string $apiUrl The base URL of the ChannelEngine API.
-     * @param string $apiKey The API key for authentication.
      */
-    public function __construct(string $apiUrl, string $apiKey)
+    public function __construct()
     {
         $this->httpClient = new HttpClient();
-        $this->apiUrl = $apiUrl;
-        $this->apiKey = $apiKey;
     }
 
     /**
      * Sends products to the ChannelEngine API via a POST request.
      *
      * @param array $products An array of formatted products to be sent to ChannelEngine.
-     * @return mixed The response from the API.
      */
-    public function sendProducts(array $products)
+    public function sendProducts(array $products): ?array
     {
-        $url = $this->apiUrl . '/v2/products?apikey=' . $this->apiKey;
+        $url = 'https://' . Configuration::get('CHANNELENGINE_ACCOUNT_NAME') . '.channelengine.net/api/v2/products?apikey=' . Configuration::get('CHANNELENGINE_API_KEY');
+
         return $this->httpClient->post($url, $products);
     }
 
     /**
      * Retrieves settings from the ChannelEngine API via a GET request.
      *
-     * @return mixed The response from the API.
      */
-    public function getSettings()
+    public function getSettings(): ?array
     {
-        $url = $this->apiUrl . '/v2/settings?apikey=' . $this->apiKey;
+        $apiUrl = Configuration::get('CHANNELENGINE_API_URL');
+        $apiKey = Configuration::get('CHANNELENGINE_API_KEY');
+
+        $url = $apiUrl . '/v2/settings?apikey=' . $apiKey;
         return $this->httpClient->get($url);
     }
 }

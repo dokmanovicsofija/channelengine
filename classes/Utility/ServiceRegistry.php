@@ -21,11 +21,10 @@ class ServiceRegistry extends Singleton
      * Registers a service in the registry.
      *
      * @param string $key The key under which the service is registered.
-     * @param mixed $service The service instance to register.
-     *
+     * @param $service
      * @return void
      */
-    public static function register(string $key, mixed $service): void
+    public static function register(string $key, $service): void
     {
         self::$services[$key] = $service;
     }
@@ -35,11 +34,10 @@ class ServiceRegistry extends Singleton
      *
      * @param string $key The key of the service to retrieve.
      *
-     * @return mixed The service instance associated with the given key.
      *
      * @throws Exception If the service is not found in the registry.
      */
-    public static function get(string $key): mixed
+    public static function get(string $key)
     {
         if (!isset(self::$services[$key])) {
             throw new Exception("Service not found: " . $key);
