@@ -2,7 +2,8 @@
     "name": "sofija/channelengine",
     "autoload": {
         "psr-4": {
-            "Sofija\\Channelengine\\": "src/"
+            "Sofija\\Channelengine\\": "controllers/",
+            "classes\\": "classes/"
         }
     },
     "authors": [
