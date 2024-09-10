@@ -51,6 +51,8 @@ class ChannelEngine extends Module
     {
         return parent::install() &&
             $this->registerHook('displayBackOfficeHeader') &&
+            $this->registerHook('actionProductAdd') &&
+            $this->registerHook('actionProductUpdate') &&
             $this->installTab();
     }
 
