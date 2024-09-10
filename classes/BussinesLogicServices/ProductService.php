@@ -3,8 +3,10 @@
 namespace classes\BussinesLogicServices;
 
 use classes\BussinesLogicServices\ServiceInterface\ProductSyncServiceInterface;
+use classes\Entity\ProductDomainModel;
 use classes\Repositories\ProductRepository;
 use classes\Utility\ChannelEngineProxy;
+use PrestaShopLogger;
 
 /**
  * Class ProductService
@@ -74,5 +76,25 @@ class ProductService implements ProductSyncServiceInterface
             ];
         }
         return $formattedProducts;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function syncProductById(int $id_product): array
+    {
+        $product = $this->productRepository->getProductById($id_product);
+
+        if (!$product) {
+            throw new \Exception("Product with ID $id_product not found.");
+        }
+
+        $formattedProduct = $product->toArray();
+
+        $response = $this->channelEngineProxy->sendProducts([$formattedProduct]);
+
+        PrestaShopLogger::addLog('ChannelEngine API Response: ' . print_r($response, true), 1);
+
+        return $response;
     }
 }

@@ -29,7 +29,8 @@ class ChannelEngineProxy
      */
     public function sendProducts(array $products): ?array
     {
-        $url = 'https://' . Configuration::get('CHANNELENGINE_ACCOUNT_NAME') . '.channelengine.net/api/v2/products?apikey=' . Configuration::get('CHANNELENGINE_API_KEY');
+        $url = 'https://' . Configuration::get('CHANNELENGINE_ACCOUNT_NAME') .
+            '.channelengine.net/api/v2/products?apikey=' . Configuration::get('CHANNELENGINE_API_KEY');
 
         return $this->httpClient->post($url, $products);
     }

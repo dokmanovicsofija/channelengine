@@ -54,4 +54,27 @@ class ProductRepository implements ProductRepositoryInterface
 
         return $domainProducts;
     }
+
+    public function getProductById(int $productId): ?ProductDomainModel
+    {
+        $idLang = (int)Context::getContext()->language->id;
+        $product = new Product($productId, false, $idLang);
+
+        $coverImage = Image::getCover($product->id);
+        $imageUrl = $coverImage
+            ? Context::getContext()->link->getImageLink($product->link_rewrite, $coverImage['id_image'], 'home_default')
+            : 'path/to/default-image.jpg';
+
+        return new ProductDomainModel(
+
+            $product->id,
+            $product->name,
+            $product->description,
+            $product->price,
+            $product->manufacturer_name ?? '',
+            $product->ean13 ?? '',
+            $imageUrl,
+            StockAvailable::getQuantityAvailableByProduct($product->id)
+        );
+    }
 }

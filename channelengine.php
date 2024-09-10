@@ -1,6 +1,8 @@
 <?php
 
 use classes\Bootstrap;
+use classes\BussinesLogicServices\ServiceInterface\ProductSyncServiceInterface;
+use classes\Utility\ServiceRegistry;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -20,6 +22,7 @@ class ChannelEngine extends Module
      * Class constructor.
      * Initializes the module properties, such as name, version, author,
      * and compatibility with PrestaShop versions. It also enables Bootstrap styling.
+     * @throws Exception
      */
     public function __construct()
     {
@@ -47,11 +50,10 @@ class ChannelEngine extends Module
      *
      * @return bool Returns true if installation is successful, false otherwise
      */
-    public function install()
+    public function install(): bool
     {
         return parent::install() &&
             $this->registerHook('displayBackOfficeHeader') &&
-            $this->registerHook('actionProductAdd') &&
             $this->registerHook('actionProductUpdate') &&
             $this->installTab();
     }
@@ -61,8 +63,9 @@ class ChannelEngine extends Module
      * Removes the admin tab created during installation.
      *
      * @return bool Returns true if uninstallation is successful, false otherwise
+     * @throws PrestaShopException
      */
-    public function uninstall()
+    public function uninstall(): bool
     {
         return parent::uninstall() && $this->uninstallTab();
     }
@@ -73,7 +76,7 @@ class ChannelEngine extends Module
      *
      * @return bool Returns true if the tab is successfully added, false otherwise
      */
-    public function installTab()
+    public function installTab(): bool
     {
         $tab = new Tab();
         $tab->class_name = 'AdminChannelEngine';
@@ -90,8 +93,9 @@ class ChannelEngine extends Module
      * Removes the admin tab created during the installation of the module.
      *
      * @return bool Returns true if the tab is successfully removed, false otherwise
+     * @throws PrestaShopException
      */
-    public function uninstallTab()
+    public function uninstallTab(): bool
     {
         $id_tab = (int)Tab::getIdFromClassName('AdminChannelEngine');
         if ($id_tab) {
@@ -125,5 +129,46 @@ class ChannelEngine extends Module
     {
         $link = $this->context->link->getAdminLink('AdminChannelEngine');
         Tools::redirectAdmin($link);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public
+    function hookActionProductUpdate(
+        $params
+    ) {
+        PrestaShopLogger::addLog('hookActionProductUpdate triggered for product ID: ' . $params['id_product'], 1);
+
+        try {
+            $productId = $params['id_product'];
+            PrestaShopLogger::addLog('Attempting to sync product ID: ' . $productId, 1);
+
+            $this->syncProduct($productId);
+        } catch (Exception $e) {
+            PrestaShopLogger::addLog('Error during sync in hookActionProductUpdate for product ID: ' . $productId . ' - ' . $e->getMessage(), 3);
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private
+    function syncProduct(
+        $productId
+    ) {
+        PrestaShopLogger::addLog('Syncing product with ID: ' . $productId, 1);
+
+        try {
+            $productSyncService = ServiceRegistry::getInstance()->get(ProductSyncServiceInterface::class);
+            PrestaShopLogger::addLog('ProductSyncService obtained for product ID: ' . $productId, 1);
+
+            $productSyncService->syncProductById($productId);
+
+            PrestaShopLogger::addLog('Synchronization successful for product ID: ' . $productId, 1);
+        } catch (Exception $e) {
+            PrestaShopLogger::addLog('Error during syncProduct for product ID: ' . $productId . ' - ' . $e->getMessage(), 3);
+            throw $e;
+        }
     }
 }

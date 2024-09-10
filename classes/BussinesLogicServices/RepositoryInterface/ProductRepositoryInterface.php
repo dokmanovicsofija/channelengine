@@ -2,6 +2,8 @@
 
 namespace classes\BussinesLogicServices\RepositoryInterface;
 
+use classes\Entity\ProductDomainModel;
+
 /**
  * Interface ProductRepositoryInterface
  *
@@ -15,4 +17,6 @@ interface ProductRepositoryInterface
      * @return array Returns an array of products retrieved from PrestaShop.
      */
     public function getProductsFromPrestaShop(): array;
+
+    public function getProductById(int $productId): ?ProductDomainModel;
 }
