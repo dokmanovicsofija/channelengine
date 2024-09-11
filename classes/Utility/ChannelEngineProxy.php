@@ -19,7 +19,7 @@ class ChannelEngineProxy
      */
     public function __construct()
     {
-        $this->httpClient = new HttpClient();
+        $this->httpClient = HttpClient::getInstance();
     }
 
     /**

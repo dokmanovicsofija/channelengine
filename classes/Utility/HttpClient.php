@@ -6,8 +6,9 @@ namespace classes\Utility;
  * Class HttpClient
  *
  * This class provides simple HTTP client functionality to make GET and POST requests using cURL.
+ *  Implements the Singleton design pattern to ensure only one instance exists.
  */
-class HttpClient
+class HttpClient extends Singleton
 {
     /**
      * Sends an HTTP GET request to the specified URL with optional headers.
@@ -16,7 +17,7 @@ class HttpClient
      * @param array $headers Optional. An array of headers to include with the request.
      * @return array|null The JSON-decoded response as an associative array, or null if the response cannot be decoded.
      */
-    public function get(string $url, array $headers = [])
+    public function get(string $url, array $headers = []): ?array
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -36,7 +37,7 @@ class HttpClient
      * @param array $headers Optional. An array of headers to include with the request.
      * @return array|null The JSON-decoded response as an associative array, or null if the response cannot be decoded.
      */
-    public function post(string $url, array $data, array $headers = [])
+    public function post(string $url, array $data, array $headers = []): ?array
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
