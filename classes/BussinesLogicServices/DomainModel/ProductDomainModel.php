@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\Entity;
+namespace classes\BussinesLogicServices\DomainModel;
 
 /**
  * Class ProductDomainModel
