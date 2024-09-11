@@ -35,16 +35,18 @@ class ChannelEngineProxy
         return $this->httpClient->post($url, $products);
     }
 
-    /**
-     * Retrieves settings from the ChannelEngine API via a GET request.
-     *
-     */
-    public function getSettings(): ?array
+    public function validateCredentials($apiKey): bool
     {
-        $apiUrl = Configuration::get('CHANNELENGINE_API_URL');
-        $apiKey = Configuration::get('CHANNELENGINE_API_KEY');
+        $url = 'https://logeecom-1-dev.channelengine.net/api/v2/settings?apikey=' . $apiKey;
 
-        $url = $apiUrl . '/v2/settings?apikey=' . $apiKey;
-        return $this->httpClient->get($url);
+        $headers = ['Accept: application/json'];
+
+        $response = $this->httpClient->get($url, $headers);
+
+        if ($response && $response['StatusCode'] == 200 && $response['Success'] === true) {
+            return true;
+        }
+
+        return false;
     }
 }

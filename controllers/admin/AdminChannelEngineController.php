@@ -1,5 +1,8 @@
 <?php
 
+use classes\BussinesLogicServices\ServiceInterface\LoginServiceInterface;
+use classes\Utility\ServiceRegistry;
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -52,7 +55,6 @@ class AdminChannelEngineController extends ModuleAdminController
      */
     protected function defaultAction(): void
     {
-
         if (Configuration::hasKey('CHANNELENGINE_ACCOUNT_NAME')) {
             Tools::redirectAdmin($this->context->link->getAdminLink('AdminChannelEngine') . '&action=syncPage');
         }
@@ -96,6 +98,7 @@ class AdminChannelEngineController extends ModuleAdminController
     /**
      * Process the login form submission and validate the API key.
      * @throws SmartyException
+     * @throws Exception
      */
     public function processLogin(): void
     {
@@ -107,27 +110,14 @@ class AdminChannelEngineController extends ModuleAdminController
             return;
         }
 
-        $url = 'https://logeecom-1-dev.channelengine.net/api/v2/settings?apikey=' . $apiKey;
+        $loginService = ServiceRegistry::get(LoginServiceInterface::class);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPGET, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['accept: application/json']);
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        $responseData = json_decode($response, true);
-
-        if ($responseData['StatusCode'] == 200 && $responseData['Success'] === true) {
-            Configuration::updateValue('CHANNELENGINE_ACCOUNT_NAME', $accountName);
-            Configuration::updateValue('CHANNELENGINE_API_KEY', $apiKey);
-
-            Tools::redirectAdmin($this->context->link->getAdminLink('AdminChannelEngine') . '&action=syncPage');
-        } else {
+        if (!$loginService->handleLogin($apiKey, $accountName)) {
             $this->displayLogin('Login failed. Please check your credentials.');
+            return;
         }
+
+        Tools::redirectAdmin($this->context->link->getAdminLink('AdminChannelEngine') . '&action=syncPage');
     }
 
     /**

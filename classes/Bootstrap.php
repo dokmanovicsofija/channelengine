@@ -2,8 +2,10 @@
 
 namespace classes;
 
+use classes\BussinesLogicServices\LoginService;
 use classes\BussinesLogicServices\ProductService;
 use classes\BussinesLogicServices\RepositoryInterface\ProductRepositoryInterface;
+use classes\BussinesLogicServices\ServiceInterface\LoginServiceInterface;
 use classes\BussinesLogicServices\ServiceInterface\ProductSyncServiceInterface;
 use classes\Repositories\ProductRepository;
 use classes\Utility\ChannelEngineProxy;
@@ -60,6 +62,9 @@ class Bootstrap
     {
         ServiceRegistry::getInstance()->register(ProductSyncServiceInterface::class, new ProductService(
             ServiceRegistry::getInstance()->get(ProductRepositoryInterface::class),
+            ServiceRegistry::getInstance()->get(ChannelEngineProxy::class)
+        ));
+        ServiceRegistry::getInstance()->register(LoginServiceInterface::class, new LoginService(
             ServiceRegistry::getInstance()->get(ChannelEngineProxy::class)
         ));
     }
