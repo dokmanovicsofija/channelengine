@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\BussinesLogicServices;
+namespace classes\BussinesLogicServices\Services;
 
 use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
 use classes\Repositories\ProductRepository;
