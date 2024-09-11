@@ -2,6 +2,7 @@
 
 use classes\Bootstrap;
 use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
+use classes\Utility\ChannelEngineInstaller;
 use classes\Utility\ServiceRegistry;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -46,64 +47,35 @@ class ChannelEngine extends Module
 
     /**
      * Installs the module.
-     * Registers necessary hooks and adds the admin tab for module configuration.
      *
-     * @return bool Returns true if installation is successful, false otherwise
+     * @return bool
      */
-    public function install(): bool
+    public function install()
     {
-        return parent::install() &&
-            $this->registerHook('displayBackOfficeHeader') &&
-            $this->registerHook('actionProductUpdate') &&
-            $this->installTab();
+        $installer = new ChannelEngineInstaller($this);
+        return parent::install() && $installer->install();
     }
 
     /**
      * Uninstalls the module.
-     * Removes the admin tab created during installation.
      *
-     * @return bool Returns true if uninstallation is successful, false otherwise
+     * @return bool
      * @throws PrestaShopException
      */
-    public function uninstall(): bool
+    public function uninstall()
     {
-        return parent::uninstall() && $this->uninstallTab();
+        $installer = new ChannelEngineInstaller($this);
+        return parent::uninstall() && $installer->uninstall();
     }
 
     /**
-     * Adds a tab in the PrestaShop admin panel for managing the module.
-     * This tab will appear under the "Modules" section in the admin menu.
-     *
-     * @return bool Returns true if the tab is successfully added, false otherwise
+     * Redirects the user to the module's configuration page.
+     * This method is called when the user clicks on the "Configure" button in the module list.
      */
-    public function installTab(): bool
+    public function getContent()
     {
-        $tab = new Tab();
-        $tab->class_name = 'AdminChannelEngine';
-        $tab->module = $this->name;
-        $tab->id_parent = (int)Tab::getIdFromClassName('AdminParentModulesSf');
-        $tab->name = array();
-        foreach (Language::getLanguages(true) as $lang) {
-            $tab->name[$lang['id_lang']] = 'Channel Engine';
-        }
-        return $tab->add();
-    }
-
-    /**
-     * Removes the admin tab created during the installation of the module.
-     *
-     * @return bool Returns true if the tab is successfully removed, false otherwise
-     * @throws PrestaShopException
-     */
-    public function uninstallTab(): bool
-    {
-        $id_tab = (int)Tab::getIdFromClassName('AdminChannelEngine');
-        if ($id_tab) {
-            $tab = new Tab($id_tab);
-            return $tab->delete();
-        }
-
-        return true;
+        $link = $this->context->link->getAdminLink('AdminChannelEngine');
+        Tools::redirectAdmin($link);
     }
 
     /**
@@ -119,16 +91,6 @@ class ChannelEngine extends Module
             $this->context->controller->addJS($this->_path . 'views/js/sync.js');
             $this->context->controller->addCSS($this->_path . 'views/css/sync.css');
         }
-    }
-
-    /**
-     * Redirects the user to the module's configuration page.
-     * This method is called when the user clicks on the "Configure" button in the module list.
-     */
-    public function getContent()
-    {
-        $link = $this->context->link->getAdminLink('AdminChannelEngine');
-        Tools::redirectAdmin($link);
     }
 
     /**
@@ -148,39 +110,12 @@ class ChannelEngine extends Module
 
         try {
             $productId = $params['id_product'];
-            $this->syncProduct($productId);
+            $productSyncService = ServiceRegistry::getInstance()->get(ProductSyncServiceInterface::class);
+            $productSyncService->syncProductById($productId);
+            PrestaShopLogger::addLog('Synchronization successful for product ID: ' . $productId, 1);
         } catch (Exception $e) {
             PrestaShopLogger::addLog('Error during sync in hookActionProductUpdate for product ID: ' . $productId . ' - ' . $e->getMessage(),
                 3);
-        }
-    }
-
-    /**
-     * Synchronizes a product with ChannelEngine by its product ID.
-     *
-     * This method logs the start of the synchronization, retrieves the product synchronization service
-     * from the service registry, and attempts to synchronize the product with ChannelEngine.
-     * If synchronization is successful, it logs the success; otherwise, it logs the error and rethrows the exception.
-     *
-     * @param int $productId The ID of the product to synchronize.
-     * @throws Exception If there is an issue during product synchronization.
-     */
-    private
-    function syncProduct(
-        int $productId
-    ) {
-        PrestaShopLogger::addLog('Syncing product with ID: ' . $productId, 1);
-
-        try {
-            $productSyncService = ServiceRegistry::getInstance()->get(ProductSyncServiceInterface::class);
-
-            $productSyncService->syncProductById($productId);
-
-            PrestaShopLogger::addLog('Synchronization successful for product ID: ' . $productId, 1);
-        } catch (Exception $e) {
-            PrestaShopLogger::addLog('Error during syncProduct for product ID: ' . $productId . ' - ' . $e->getMessage(),
-                3);
-            throw $e;
         }
     }
 }
