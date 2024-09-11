@@ -1,6 +1,6 @@
 <?php
 
-use classes\BussinesLogicServices\ServiceInterface\LoginServiceInterface;
+use classes\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
 use classes\Utility\ServiceRegistry;
 
 if (!defined('_PS_VERSION_')) {

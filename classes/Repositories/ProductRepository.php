@@ -3,7 +3,7 @@
 namespace classes\Repositories;
 
 use classes\BussinesLogicServices\DomainModel\ProductDomainModel;
-use classes\BussinesLogicServices\RepositoryInterface\ProductRepositoryInterface;
+use classes\BussinesLogicServices\Interfaces\RepositoryInterface\ProductRepositoryInterface;
 use Context;
 use Image;
 use Product;

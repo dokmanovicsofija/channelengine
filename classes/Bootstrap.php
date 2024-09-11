@@ -2,11 +2,11 @@
 
 namespace classes;
 
+use classes\BussinesLogicServices\Interfaces\RepositoryInterface\ProductRepositoryInterface;
+use classes\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
+use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
 use classes\BussinesLogicServices\LoginService;
 use classes\BussinesLogicServices\ProductService;
-use classes\BussinesLogicServices\RepositoryInterface\ProductRepositoryInterface;
-use classes\BussinesLogicServices\ServiceInterface\LoginServiceInterface;
-use classes\BussinesLogicServices\ServiceInterface\ProductSyncServiceInterface;
 use classes\Repositories\ProductRepository;
 use classes\Utility\ChannelEngineProxy;
 use classes\Utility\ServiceRegistry;

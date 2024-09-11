@@ -2,7 +2,7 @@
 
 namespace classes\BussinesLogicServices;
 
-use classes\BussinesLogicServices\ServiceInterface\ProductSyncServiceInterface;
+use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
 use classes\Repositories\ProductRepository;
 use classes\Utility\ChannelEngineProxy;
 use PrestaShopLogger;

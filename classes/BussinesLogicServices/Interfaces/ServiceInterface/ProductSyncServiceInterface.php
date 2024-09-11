@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\BussinesLogicServices\ServiceInterface;
+namespace classes\BussinesLogicServices\Interfaces\ServiceInterface;
 
 /**
  * Interface ProductSyncServiceInterface

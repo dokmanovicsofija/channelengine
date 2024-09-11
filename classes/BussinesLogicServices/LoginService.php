@@ -2,7 +2,7 @@
 
 namespace classes\BussinesLogicServices;
 
-use classes\BussinesLogicServices\ServiceInterface\LoginServiceInterface;
+use classes\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
 use classes\Utility\ChannelEngineProxy;
 use Configuration;
 

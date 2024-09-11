@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\BussinesLogicServices\RepositoryInterface;
+namespace classes\BussinesLogicServices\Interfaces\RepositoryInterface;
 
 use classes\BussinesLogicServices\DomainModel\ProductDomainModel;
 

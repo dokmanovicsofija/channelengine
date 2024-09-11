@@ -1,7 +1,7 @@
 <?php
 
 use classes\Bootstrap;
-use classes\BussinesLogicServices\ServiceInterface\ProductSyncServiceInterface;
+use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
 use classes\Utility\ServiceRegistry;
 
 require_once __DIR__ . '/vendor/autoload.php';
