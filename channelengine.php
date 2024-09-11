@@ -32,7 +32,7 @@ class ChannelEngine extends Module
         $this->version = '1.0.0';
         $this->author = 'Sofija';
         $this->need_instance = 0;
-        $this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = ['min' => '8.1', 'max' => '8.1.7'];
         $this->bootstrap = true;
 
         parent::__construct();
@@ -50,7 +50,7 @@ class ChannelEngine extends Module
      *
      * @return bool
      */
-    public function install()
+    public function install(): bool
     {
         $installer = new ChannelEngineInstaller($this);
         return parent::install() && $installer->install();
@@ -62,7 +62,7 @@ class ChannelEngine extends Module
      * @return bool
      * @throws PrestaShopException
      */
-    public function uninstall()
+    public function uninstall(): bool
     {
         $installer = new ChannelEngineInstaller($this);
         return parent::uninstall() && $installer->uninstall();
@@ -72,7 +72,7 @@ class ChannelEngine extends Module
      * Redirects the user to the module's configuration page.
      * This method is called when the user clicks on the "Configure" button in the module list.
      */
-    public function getContent()
+    public function getContent(): void
     {
         $link = $this->context->link->getAdminLink('AdminChannelEngine');
         Tools::redirectAdmin($link);
