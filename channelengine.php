@@ -161,7 +161,6 @@ class ChannelEngine extends Module
 
         try {
             $productSyncService = ServiceRegistry::getInstance()->get(ProductSyncServiceInterface::class);
-            PrestaShopLogger::addLog('ProductSyncService obtained for product ID: ' . $productId, 1);
 
             $productSyncService->syncProductById($productId);
 

@@ -170,7 +170,7 @@ class ProductDomainModel
      * such as JSON encoding or sending data to an external API.
      *
      * @return array An associative array where each key corresponds to a product property:
-     *  - 'id': The product's unique identifier.
+     *  - 'MerchantProductNo': The product's unique identifier.
      *  - 'name': The name of the product.
      *  - 'description': The description of the product.
      *  - 'price': The price of the product.
@@ -182,7 +182,7 @@ class ProductDomainModel
     public function toArray(): array
     {
         return [
-            'id' => $this->getId(),
+            'MerchantProductNo' => $this->getId(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
             'price' => $this->getPrice(),

@@ -66,7 +66,6 @@ class ProductRepository implements ProductRepositoryInterface
             : 'path/to/default-image.jpg';
 
         return new ProductDomainModel(
-
             $product->id,
             $product->name,
             $product->description,

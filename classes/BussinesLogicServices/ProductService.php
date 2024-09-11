@@ -64,7 +64,7 @@ class ProductService implements ProductSyncServiceInterface
             $formattedProducts[] = [
                 'Name' => $product['name'],
                 'Description' => $product['description'],
-                'MerchantProductNo' => $product['id'],
+                'MerchantProductNo' => $product['MerchantProductNo'],
                 'Price' => $product['price'],
                 'VatRateType' => 'STANDARD',
                 'Brand' => $product['brand'] ?? '',
