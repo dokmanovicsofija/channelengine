@@ -2,8 +2,8 @@
 
 namespace classes\Repositories;
 
+use classes\BussinesLogicServices\DomainModel\ProductDomainModel;
 use classes\BussinesLogicServices\RepositoryInterface\ProductRepositoryInterface;
-use classes\Entity\ProductDomainModel;
 use Context;
 use Image;
 use Product;
@@ -55,6 +55,16 @@ class ProductRepository implements ProductRepositoryInterface
         return $domainProducts;
     }
 
+    /**
+     * Retrieves a product from PrestaShop by its product ID and returns it as a ProductDomainModel.
+     *
+     * This method fetches the product details, including the cover image and stock availability, from PrestaShop.
+     * If the product has a cover image, the image URL is generated; otherwise, a default image URL is used.
+     * The product details are returned as an instance of the ProductDomainModel.
+     *
+     * @param int $productId The ID of the product to be retrieved.
+     * @return ProductDomainModel|null The product data as a ProductDomainModel, or null if not found.
+     */
     public function getProductById(int $productId): ?ProductDomainModel
     {
         $idLang = (int)Context::getContext()->language->id;

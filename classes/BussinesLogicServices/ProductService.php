@@ -3,7 +3,6 @@
 namespace classes\BussinesLogicServices;
 
 use classes\BussinesLogicServices\ServiceInterface\ProductSyncServiceInterface;
-use classes\Entity\ProductDomainModel;
 use classes\Repositories\ProductRepository;
 use classes\Utility\ChannelEngineProxy;
 use PrestaShopLogger;
@@ -79,8 +78,16 @@ class ProductService implements ProductSyncServiceInterface
     }
 
     /**
-     * @throws \Exception
+     * Synchronizes a single product with ChannelEngine by its product ID.
+     *
+     * This method retrieves the product from the repository, formats it, and then sends it to ChannelEngine.
+     * If the product is not found, it throws an exception. The response from ChannelEngine is logged for debugging purposes.
+     *
+     * @param int $id_product The ID of the product to be synchronized.
+     * @return array The response from ChannelEngine after attempting to sync the product.
+     * @throws \Exception If the product is not found in the repository.
      */
+
     public function syncProductById(int $id_product): array
     {
         $product = $this->productRepository->getProductById($id_product);

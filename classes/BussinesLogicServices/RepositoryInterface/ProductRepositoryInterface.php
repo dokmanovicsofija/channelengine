@@ -2,7 +2,7 @@
 
 namespace classes\BussinesLogicServices\RepositoryInterface;
 
-use classes\Entity\ProductDomainModel;
+use classes\BussinesLogicServices\DomainModel\ProductDomainModel;
 
 /**
  * Interface ProductRepositoryInterface

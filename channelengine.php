@@ -132,7 +132,13 @@ class ChannelEngine extends Module
     }
 
     /**
-     * @throws Exception
+     * Hook that is triggered when a product is updated in PrestaShop.
+     *
+     * This method logs the hook trigger, retrieves the product ID, and attempts to synchronize the product
+     * with ChannelEngine. In case of an error during the synchronization, it logs the error message.
+     *
+     * @param array $params Parameters of the hook, including the product ID being updated.
+     * @throws Exception If there is an issue during product synchronization.
      */
     public
     function hookActionProductUpdate(
@@ -142,16 +148,22 @@ class ChannelEngine extends Module
 
         try {
             $productId = $params['id_product'];
-            PrestaShopLogger::addLog('Attempting to sync product ID: ' . $productId, 1);
-
             $this->syncProduct($productId);
         } catch (Exception $e) {
-            PrestaShopLogger::addLog('Error during sync in hookActionProductUpdate for product ID: ' . $productId . ' - ' . $e->getMessage(), 3);
+            PrestaShopLogger::addLog('Error during sync in hookActionProductUpdate for product ID: ' . $productId . ' - ' . $e->getMessage(),
+                3);
         }
     }
 
     /**
-     * @throws Exception
+     * Synchronizes a product with ChannelEngine by its product ID.
+     *
+     * This method logs the start of the synchronization, retrieves the product synchronization service
+     * from the service registry, and attempts to synchronize the product with ChannelEngine.
+     * If synchronization is successful, it logs the success; otherwise, it logs the error and rethrows the exception.
+     *
+     * @param int $productId The ID of the product to synchronize.
+     * @throws Exception If there is an issue during product synchronization.
      */
     private
     function syncProduct(
@@ -166,7 +178,8 @@ class ChannelEngine extends Module
 
             PrestaShopLogger::addLog('Synchronization successful for product ID: ' . $productId, 1);
         } catch (Exception $e) {
-            PrestaShopLogger::addLog('Error during syncProduct for product ID: ' . $productId . ' - ' . $e->getMessage(), 3);
+            PrestaShopLogger::addLog('Error during syncProduct for product ID: ' . $productId . ' - ' . $e->getMessage(),
+                3);
             throw $e;
         }
     }
