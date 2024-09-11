@@ -12,5 +12,7 @@
             "email": "sofija.dokmanovic@logeecom.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": ">=7.2"
+    }
 }
