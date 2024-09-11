@@ -38,9 +38,7 @@ class ChannelEngineProxy
     public function validateCredentials($apiKey): bool
     {
         $url = 'https://logeecom-1-dev.channelengine.net/api/v2/settings?apikey=' . $apiKey;
-
         $headers = ['Accept: application/json'];
-
         $response = $this->httpClient->get($url, $headers);
 
         if ($response && $response['StatusCode'] == 200 && $response['Success'] === true) {

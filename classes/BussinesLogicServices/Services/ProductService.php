@@ -97,9 +97,7 @@ class ProductService implements ProductSyncServiceInterface
         }
 
         $formattedProduct = $product->toArray();
-
         $response = $this->channelEngineProxy->sendProducts([$formattedProduct]);
-
         PrestaShopLogger::addLog('ChannelEngine API Response: ' . print_r($response, true), 1);
 
         return $response;

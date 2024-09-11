@@ -31,7 +31,7 @@ class ProductDomainModel
     private float $price;
 
     /**
-     * @var string The brand name of the product.
+     * @var ?string The brand name of the product.
      */
     private ?string $brand;
 

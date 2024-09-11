@@ -106,7 +106,8 @@ class ChannelEngine extends Module
     function hookActionProductUpdate(
         $params
     ) {
-        PrestaShopLogger::addLog('hookActionProductUpdate triggered for product ID: ' . $params['id_product'], 1);
+        PrestaShopLogger::addLog('hookActionProductUpdate triggered for product ID: ' . $params['id_product'],
+            1);
 
         try {
             $productId = $params['id_product'];
@@ -114,7 +115,8 @@ class ChannelEngine extends Module
             $productSyncService->syncProductById($productId);
             PrestaShopLogger::addLog('Synchronization successful for product ID: ' . $productId, 1);
         } catch (Exception $e) {
-            PrestaShopLogger::addLog('Error during sync in hookActionProductUpdate for product ID: ' . $productId . ' - ' . $e->getMessage(),
+            PrestaShopLogger::addLog('Error during sync in hookActionProductUpdate for product ID: ' .
+                $productId . ' - ' . $e->getMessage(),
                 3);
         }
     }

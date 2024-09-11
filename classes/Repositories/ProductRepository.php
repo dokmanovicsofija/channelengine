@@ -27,7 +27,6 @@ class ProductRepository implements ProductRepositoryInterface
     public function getProductsFromPrestaShop(): array
     {
         $idLang = (int)Context::getContext()->language->id;
-
         $products = Product::getProducts($idLang, 0, 0, 'id_product', 'ASC');
 
         foreach ($products as &$product) {
