@@ -167,7 +167,7 @@ class ChannelEngine extends Module
      */
     private
     function syncProduct(
-        $productId
+        int $productId
     ) {
         PrestaShopLogger::addLog('Syncing product with ID: ' . $productId, 1);
 
