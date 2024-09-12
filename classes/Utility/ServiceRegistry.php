@@ -42,6 +42,7 @@ class ServiceRegistry extends Singleton
         if (!isset(self::$services[$key])) {
             throw new Exception("Service not found: " . $key);
         }
+
         return self::$services[$key];
     }
 }

@@ -38,6 +38,16 @@ class ChannelEngineProxy
         return $this->httpClient->post($url, $products);
     }
 
+    /**
+     * Validates the provided API key by sending a request to the ChannelEngine API.
+     *
+     * This method constructs the URL with the provided API key and makes an HTTP GET request
+     * to the ChannelEngine API. It checks the response for a successful status code (200)
+     * and ensures that the 'Success' field is true.
+     *
+     * @param string $apiKey The API key to validate.
+     * @return bool Returns true if the API key is valid, false otherwise.
+     */
     public function validateCredentials($apiKey): bool
     {
         $url = 'https://logeecom-1-dev.channelengine.net/api/v2/settings?apikey=' . $apiKey;
