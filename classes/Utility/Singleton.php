@@ -13,7 +13,7 @@ abstract class Singleton
     /**
      * @var array Stores instances of the Singleton subclasses.
      */
-    protected static array $instances = [];
+    protected static $instances = [];
 
     /**
      * Protected constructor to prevent creating a new instance of the class via the 'new' operator.

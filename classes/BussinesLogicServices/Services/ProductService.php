@@ -18,11 +18,11 @@ class ProductService implements ProductSyncServiceInterface
     /**
      * @var ProductRepository Handles retrieving and managing products from PrestaShop.
      */
-    private ProductRepository $productRepository;
+    private $productRepository;
     /**
      * @var ChannelEngineProxy Responsible for communicating with the ChannelEngine API.
      */
-    private ChannelEngineProxy $channelEngineProxy;
+    private $channelEngineProxy;
 
     /**
      * ProductService constructor.

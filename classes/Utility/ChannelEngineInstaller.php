@@ -19,9 +19,9 @@ class ChannelEngineInstaller
      *
      * @var ChannelEngine
      */
-    private ChannelEngine $module;
+    private $module;
 
-    private static array $hooks = array(
+    private static $hooks = array(
         'displayBackOfficeHeader',
         'actionProductUpdate'
     );

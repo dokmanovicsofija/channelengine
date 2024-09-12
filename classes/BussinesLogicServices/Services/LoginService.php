@@ -18,7 +18,7 @@ class LoginService implements LoginServiceInterface
     /**
      * @var ChannelEngineProxy An instance of the proxy used to communicate with ChannelEngine.
      */
-    private ChannelEngineProxy $channelEngineProxy;
+    private $channelEngineProxy;
 
     /**
      * Constructor to initialize the service with the proxy.

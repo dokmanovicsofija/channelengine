@@ -13,42 +13,42 @@ class ProductDomainModel
     /**
      * @var int The unique identifier of the product.
      */
-    private int $id;
+    private $id;
 
     /**
      * @var string The name of the product.
      */
-    private string $name;
+    private $name;
 
     /**
      * @var string A short description of the product.
      */
-    private string $description;
+    private $description;
 
     /**
      * @var float The price of the product.
      */
-    private float $price;
+    private $price;
 
     /**
      * @var ?string The brand name of the product.
      */
-    private ?string $brand;
+    private $brand;
 
     /**
      * @var string The EAN (European Article Number) code of the product.
      */
-    private string $ean;
+    private $ean;
 
     /**
      * @var string The URL to the product's image.
      */
-    private string $imageUrl;
+    private $imageUrl;
 
     /**
      * @var int The available quantity of the product in stock.
      */
-    private int $quantity;
+    private $quantity;
 
     /**
      * ProductDomainModel constructor.

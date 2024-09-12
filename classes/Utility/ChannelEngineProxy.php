@@ -11,7 +11,10 @@ use Configuration;
  */
 class ChannelEngineProxy
 {
-    protected HttpClient $httpClient;
+    /**
+     * @var HttpClient The HTTP client used for making API requests.
+     */
+    protected $httpClient;
 
     /**
      * Constructor for ChannelEngineProxy.

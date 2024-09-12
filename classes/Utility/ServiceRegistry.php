@@ -15,7 +15,7 @@ class ServiceRegistry extends Singleton
     /**
      * @var array An associative array to hold registered services, with keys as service names and values as service instances.
      */
-    private static array $services = [];
+    private static $services = [];
 
     /**
      * Registers a service in the registry.
