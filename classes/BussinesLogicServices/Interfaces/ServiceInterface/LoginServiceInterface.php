@@ -17,9 +17,9 @@ interface LoginServiceInterface
     /**
      * Handles the login process by validating the provided account name and API key.
      *
-     * @param string $accountName The account name for the login process.
      * @param string $apiKey The API key for the login process.
+     * @param string $accountName The account name for the login process.
      * @return bool Returns true if login is successful, false otherwise.
      */
-    public function handleLogin(string $accountName, string $apiKey): bool;
+    public function handleLogin(string $apiKey, string $accountName): bool;
 }
