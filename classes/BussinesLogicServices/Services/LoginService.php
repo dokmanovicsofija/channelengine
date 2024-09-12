@@ -3,7 +3,7 @@
 namespace classes\BussinesLogicServices\Services;
 
 use classes\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
-use classes\Utility\ChannelEngineProxy;
+use classes\Proxy\ChannelEngineProxy;
 use Configuration;
 
 /**
@@ -39,7 +39,7 @@ class LoginService implements LoginServiceInterface
      */
     public function handleLogin(string $apiKey, string $accountName): bool
     {
-        $response = $this->channelEngineProxy->validateCredentials($apiKey);
+        $response = $this->channelEngineProxy->validateCredentials($accountName, $apiKey);
 
         if ($response === true) {
             Configuration::updateValue('CHANNELENGINE_ACCOUNT_NAME', $accountName);

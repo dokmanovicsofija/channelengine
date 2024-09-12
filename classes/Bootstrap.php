@@ -7,8 +7,8 @@ use classes\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterf
 use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
 use classes\BussinesLogicServices\Services\LoginService;
 use classes\BussinesLogicServices\Services\ProductService;
+use classes\Proxy\ChannelEngineProxy;
 use classes\Repositories\ProductRepository;
-use classes\Utility\ChannelEngineProxy;
 use classes\Utility\ServiceRegistry;
 use Exception;
 

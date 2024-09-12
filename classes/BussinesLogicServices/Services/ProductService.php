@@ -3,8 +3,8 @@
 namespace classes\BussinesLogicServices\Services;
 
 use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
+use classes\Proxy\ChannelEngineProxy;
 use classes\Repositories\ProductRepository;
-use classes\Utility\ChannelEngineProxy;
 use Configuration;
 use PrestaShopLogger;
 

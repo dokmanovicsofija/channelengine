@@ -1,8 +1,8 @@
 <?php
 
-namespace classes\Utility;
+namespace classes\Proxy;
 
-use Configuration;
+use classes\Utility\HttpClient;
 
 /**
  * Class ChannelEngineProxy
