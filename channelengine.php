@@ -102,10 +102,8 @@ class ChannelEngine extends Module
      * @param array $params Parameters of the hook, including the product ID being updated.
      * @throws Exception If there is an issue during product synchronization.
      */
-    public
-    function hookActionProductUpdate(
-        $params
-    ) {
+    public function hookActionProductUpdate(array $params): void
+    {
         PrestaShopLogger::addLog('hookActionProductUpdate triggered for product ID: ' . $params['id_product'],
             1);
 
@@ -113,11 +111,13 @@ class ChannelEngine extends Module
             $productId = $params['id_product'];
             $productSyncService = ServiceRegistry::getInstance()->get(ProductSyncServiceInterface::class);
             $productSyncService->syncProductById($productId);
+
             PrestaShopLogger::addLog('Synchronization successful for product ID: ' . $productId, 1);
         } catch (Exception $e) {
-            PrestaShopLogger::addLog('Error during sync in hookActionProductUpdate for product ID: ' .
-                $productId . ' - ' . $e->getMessage(),
-                3);
+            PrestaShopLogger::addLog(
+                'Error during sync in hookActionProductUpdate for product ID: ' . $productId . ' - ' .
+                $e->getMessage(), 3
+            );
         }
     }
 }
