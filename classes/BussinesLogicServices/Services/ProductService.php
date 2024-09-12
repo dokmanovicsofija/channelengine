@@ -5,6 +5,7 @@ namespace classes\BussinesLogicServices\Services;
 use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
 use classes\Repositories\ProductRepository;
 use classes\Utility\ChannelEngineProxy;
+use Configuration;
 use PrestaShopLogger;
 
 /**
@@ -43,10 +44,12 @@ class ProductService implements ProductSyncServiceInterface
      */
     public function syncProducts(): array
     {
+        $credentials = $this->getCredentials();
         $products = $this->productRepository->getProductsFromPrestaShop();
         $formattedProducts = $this->formatProductsForChannelEngine($products);
 
-        return $this->channelEngineProxy->sendProducts($formattedProducts);
+        return $this->channelEngineProxy->sendProducts($credentials['accountName'], $credentials['apiKey'],
+            $formattedProducts);
     }
 
     /**
@@ -61,6 +64,7 @@ class ProductService implements ProductSyncServiceInterface
      */
     public function syncProductById(int $productId): array
     {
+        $credentials = $this->getCredentials();
         $product = $this->productRepository->getProductById($productId);
 
         if (!$product) {
@@ -68,7 +72,8 @@ class ProductService implements ProductSyncServiceInterface
         }
 
         $formattedProduct = $product->toArray();
-        $response = $this->channelEngineProxy->sendProducts([$formattedProduct]);
+        $response = $this->channelEngineProxy->sendProducts($credentials['accountName'], $credentials['apiKey'],
+            [$formattedProduct]);
         PrestaShopLogger::addLog('ChannelEngine API Response: ' . print_r($response, true), 1);
 
         return $response;
@@ -100,5 +105,21 @@ class ProductService implements ProductSyncServiceInterface
         }
 
         return $formattedProducts;
+    }
+
+    /**
+     * Retrieves the ChannelEngine account credentials from the PrestaShop configuration.
+     *
+     * This method fetches the account name and API key stored in the PrestaShop configuration
+     * and returns them as an associative array.
+     *
+     * @return array An associative array containing 'accountName' and 'apiKey' keys.
+     */
+    private function getCredentials(): array
+    {
+        return [
+            'accountName' => Configuration::get('CHANNELENGINE_ACCOUNT_NAME'),
+            'apiKey' => Configuration::get('CHANNELENGINE_API_KEY'),
+        ];
     }
 }
