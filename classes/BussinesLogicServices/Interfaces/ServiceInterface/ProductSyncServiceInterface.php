@@ -16,4 +16,12 @@ interface ProductSyncServiceInterface
      * @return array An array containing the result of the synchronization, including success status and message.
      */
     public function syncProducts(): array;
+
+    /**
+     * Synchronizes a single product with an external system by its ID.
+     *
+     * @param int $productId The ID of the product to be synchronized.
+     * @return array An array containing the result of the synchronization, including success status and message.
+     */
+    public function syncProductById(int $productId): array;
 }

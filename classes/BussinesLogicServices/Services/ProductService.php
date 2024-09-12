@@ -44,10 +44,34 @@ class ProductService implements ProductSyncServiceInterface
     public function syncProducts(): array
     {
         $products = $this->productRepository->getProductsFromPrestaShop();
-
         $formattedProducts = $this->formatProductsForChannelEngine($products);
 
         return $this->channelEngineProxy->sendProducts($formattedProducts);
+    }
+
+    /**
+     * Synchronizes a single product with ChannelEngine by its product ID.
+     *
+     * This method retrieves the product from the repository, formats it, and then sends it to ChannelEngine.
+     * If the product is not found, it throws an exception. The response from ChannelEngine is logged for debugging purposes.
+     *
+     * @param int $productId The ID of the product to be synchronized.
+     * @return array The response from ChannelEngine after attempting to sync the product.
+     * @throws \Exception If the product is not found in the repository.
+     */
+    public function syncProductById(int $productId): array
+    {
+        $product = $this->productRepository->getProductById($productId);
+
+        if (!$product) {
+            throw new \Exception("Product with ID $productId not found.");
+        }
+
+        $formattedProduct = $product->toArray();
+        $response = $this->channelEngineProxy->sendProducts([$formattedProduct]);
+        PrestaShopLogger::addLog('ChannelEngine API Response: ' . print_r($response, true), 1);
+
+        return $response;
     }
 
     /**
@@ -74,32 +98,7 @@ class ProductService implements ProductSyncServiceInterface
                 'Quantity' => $product['quantity'],
             ];
         }
+
         return $formattedProducts;
-    }
-
-    /**
-     * Synchronizes a single product with ChannelEngine by its product ID.
-     *
-     * This method retrieves the product from the repository, formats it, and then sends it to ChannelEngine.
-     * If the product is not found, it throws an exception. The response from ChannelEngine is logged for debugging purposes.
-     *
-     * @param int $id_product The ID of the product to be synchronized.
-     * @return array The response from ChannelEngine after attempting to sync the product.
-     * @throws \Exception If the product is not found in the repository.
-     */
-
-    public function syncProductById(int $id_product): array
-    {
-        $product = $this->productRepository->getProductById($id_product);
-
-        if (!$product) {
-            throw new \Exception("Product with ID $id_product not found.");
-        }
-
-        $formattedProduct = $product->toArray();
-        $response = $this->channelEngineProxy->sendProducts([$formattedProduct]);
-        PrestaShopLogger::addLog('ChannelEngine API Response: ' . print_r($response, true), 1);
-
-        return $response;
     }
 }
