@@ -1,9 +1,9 @@
 <?php
 
-use classes\Bootstrap;
-use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
-use classes\Utility\ChannelEngineInstaller;
-use classes\Utility\ServiceRegistry;
+use Sofija\Channelengine\Bootstrap;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
+use Sofija\Channelengine\Utility\ChannelEngineInstaller;
+use Sofija\Channelengine\Utility\ServiceRegistry;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

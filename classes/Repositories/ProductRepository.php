@@ -1,9 +1,9 @@
 <?php
 
-namespace classes\Repositories;
+namespace Sofija\Channelengine\Repositories;
 
-use classes\BussinesLogicServices\DomainModel\ProductDomainModel;
-use classes\BussinesLogicServices\Interfaces\RepositoryInterface\ProductRepositoryInterface;
+use Sofija\Channelengine\BussinesLogicServices\DomainModel\ProductDomainModel;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\RepositoryInterface\ProductRepositoryInterface;
 use Context;
 use Image;
 use Product;

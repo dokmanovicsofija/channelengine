@@ -1,8 +1,8 @@
 <?php
 
-namespace classes\BussinesLogicServices\Interfaces\RepositoryInterface;
+namespace Sofija\Channelengine\BussinesLogicServices\Interfaces\RepositoryInterface;
 
-use classes\BussinesLogicServices\DomainModel\ProductDomainModel;
+use Sofija\Channelengine\BussinesLogicServices\DomainModel\ProductDomainModel;
 
 /**
  * Interface ProductRepositoryInterface

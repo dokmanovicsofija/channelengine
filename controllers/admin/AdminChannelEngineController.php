@@ -1,7 +1,7 @@
 <?php
 
-use classes\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
-use classes\Utility\ServiceRegistry;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
+use Sofija\Channelengine\Utility\ServiceRegistry;
 
 if (!defined('_PS_VERSION_')) {
     exit;

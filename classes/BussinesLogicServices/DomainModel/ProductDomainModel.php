@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\BussinesLogicServices\DomainModel;
+namespace Sofija\Channelengine\BussinesLogicServices\DomainModel;
 
 /**
  * Class ProductDomainModel

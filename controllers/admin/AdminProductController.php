@@ -7,8 +7,8 @@ if (!defined('_PS_VERSION_')) {
 /** @noinspection PhpIncludeInspection */
 require_once rtrim(_PS_MODULE_DIR_, '/') . '/channelengine/vendor/autoload.php';
 
-use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
-use classes\Utility\ServiceRegistry;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
+use Sofija\Channelengine\Utility\ServiceRegistry;
 
 /**
  * Class AdminProductController

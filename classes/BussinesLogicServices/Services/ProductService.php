@@ -1,10 +1,10 @@
 <?php
 
-namespace classes\BussinesLogicServices\Services;
+namespace Sofija\Channelengine\BussinesLogicServices\Services;
 
-use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
-use classes\Proxy\ChannelEngineProxy;
-use classes\Repositories\ProductRepository;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
+use Sofija\Channelengine\Proxy\ChannelEngineProxy;
+use Sofija\Channelengine\Repositories\ProductRepository;
 use Configuration;
 use PrestaShopLogger;
 

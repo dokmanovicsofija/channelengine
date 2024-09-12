@@ -1,9 +1,9 @@
 <?php
 
-namespace classes\BussinesLogicServices\Services;
+namespace Sofija\Channelengine\BussinesLogicServices\Services;
 
-use classes\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
-use classes\Proxy\ChannelEngineProxy;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
+use Sofija\Channelengine\Proxy\ChannelEngineProxy;
 use Configuration;
 
 /**

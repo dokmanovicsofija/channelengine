@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\BussinesLogicServices\Interfaces\ServiceInterface;
+namespace Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface;
 
 /**
  * Interface LoginServiceInterface

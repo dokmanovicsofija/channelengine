@@ -1,15 +1,15 @@
 <?php
 
-namespace classes;
+namespace Sofija\Channelengine;
 
-use classes\BussinesLogicServices\Interfaces\RepositoryInterface\ProductRepositoryInterface;
-use classes\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
-use classes\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
-use classes\BussinesLogicServices\Services\LoginService;
-use classes\BussinesLogicServices\Services\ProductService;
-use classes\Proxy\ChannelEngineProxy;
-use classes\Repositories\ProductRepository;
-use classes\Utility\ServiceRegistry;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\RepositoryInterface\ProductRepositoryInterface;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface\LoginServiceInterface;
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
+use Sofija\Channelengine\BussinesLogicServices\Services\LoginService;
+use Sofija\Channelengine\BussinesLogicServices\Services\ProductService;
+use Sofija\Channelengine\Proxy\ChannelEngineProxy;
+use Sofija\Channelengine\Repositories\ProductRepository;
+use Sofija\Channelengine\Utility\ServiceRegistry;
 use Exception;
 
 if (!defined('_PS_VERSION_')) {

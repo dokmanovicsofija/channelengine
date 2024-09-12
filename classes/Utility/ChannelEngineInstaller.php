@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\Utility;
+namespace Sofija\Channelengine\Utility;
 
 use ChannelEngine;
 use Configuration;

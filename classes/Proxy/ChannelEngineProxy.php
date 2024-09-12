@@ -1,8 +1,8 @@
 <?php
 
-namespace classes\Proxy;
+namespace Sofija\Channelengine\Proxy;
 
-use classes\Utility\HttpClient;
+use Sofija\Channelengine\Utility\HttpClient;
 
 /**
  * Class ChannelEngineProxy
