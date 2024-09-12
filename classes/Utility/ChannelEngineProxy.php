@@ -48,16 +48,13 @@ class ChannelEngineProxy
      * @param string $apiKey The API key to validate.
      * @return bool Returns true if the API key is valid, false otherwise.
      */
-    public function validateCredentials($apiKey): bool
+    public function validateCredentials(string $apiKey): bool
     {
-        $url = 'https://logeecom-1-dev.channelengine.net/api/v2/settings?apikey=' . $apiKey;
+        $accountName = Configuration::get('CHANNELENGINE_ACCOUNT_NAME');
+        $baseUrl = 'https://' . $accountName . '.channelengine.net/api/v2/settings?apikey=' . $apiKey;
         $headers = ['Accept: application/json'];
-        $response = $this->httpClient->get($url, $headers);
+        $response = $this->httpClient->get($baseUrl, $headers);
 
-        if ($response && $response['StatusCode'] == 200 && $response['Success'] === true) {
-            return true;
-        }
-
-        return false;
+        return $response && $response['StatusCode'] == 200 && $response['Success'];
     }
 }
