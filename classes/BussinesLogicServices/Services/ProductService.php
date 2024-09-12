@@ -2,6 +2,7 @@
 
 namespace Sofija\Channelengine\BussinesLogicServices\Services;
 
+use Sofija\Channelengine\BussinesLogicServices\Interfaces\RepositoryInterface\ProductRepositoryInterface;
 use Sofija\Channelengine\BussinesLogicServices\Interfaces\ServiceInterface\ProductSyncServiceInterface;
 use Sofija\Channelengine\Proxy\ChannelEngineProxy;
 use Sofija\Channelengine\Repositories\ProductRepository;
@@ -17,7 +18,7 @@ use PrestaShopLogger;
 class ProductService implements ProductSyncServiceInterface
 {
     /**
-     * @var ProductRepository Handles retrieving and managing products from PrestaShop.
+     * @var ProductRepositoryInterface Handles retrieving and managing products from PrestaShop.
      */
     private $productRepository;
     /**
@@ -31,7 +32,7 @@ class ProductService implements ProductSyncServiceInterface
      * @param ProductRepository $productRepository The repository for fetching products.
      * @param ChannelEngineProxy $channelEngineProxy The proxy for sending products to ChannelEngine.
      */
-    public function __construct(ProductRepository $productRepository, ChannelEngineProxy $channelEngineProxy)
+    public function __construct(ProductRepositoryInterface $productRepository, ChannelEngineProxy $channelEngineProxy)
     {
         $this->productRepository = $productRepository;
         $this->channelEngineProxy = $channelEngineProxy;
