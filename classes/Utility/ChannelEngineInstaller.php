@@ -54,10 +54,10 @@ class ChannelEngineInstaller
      */
     public function uninstall(): bool
     {
-        $this->removeHooks();
-        $this->removeMenuItem();
+        $hooksRemoved = $this->removeHooks();
+        $menuItemRemoved = $this->removeMenuItem();
 
-        return true;
+        return $hooksRemoved && $menuItemRemoved;
     }
 
     /**
