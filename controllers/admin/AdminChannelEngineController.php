@@ -56,7 +56,8 @@ class AdminChannelEngineController extends ModuleAdminController
     protected function defaultAction(): void
     {
         if (Configuration::hasKey('CHANNELENGINE_ACCOUNT_NAME')) {
-            Tools::redirectAdmin($this->context->link->getAdminLink('AdminChannelEngine') . '&action=syncPage');
+            Tools::redirectAdmin($this->context->link->getAdminLink('AdminChannelEngine') .
+                '&action=syncPage');
         }
 
         $loginUrl = $this->context->link->getAdminLink('AdminChannelEngine') . '&action=displayLogin';
@@ -66,7 +67,8 @@ class AdminChannelEngineController extends ModuleAdminController
             'login_url' => $loginUrl,
         ]);
 
-        $output = $this->context->smarty->fetch($this->module->getLocalPath() . 'views/templates/admin/configure.tpl');
+        $output = $this->context->smarty->fetch($this->module->getLocalPath() .
+            'views/templates/admin/configure.tpl');
         $this->context->smarty->assign('content', $output);
         $this->setTemplate('content.tpl');
     }
@@ -90,7 +92,8 @@ class AdminChannelEngineController extends ModuleAdminController
             $this->context->smarty->assign('error', $errorMessage);
         }
 
-        $output = $this->context->smarty->fetch($this->module->getLocalPath() . 'views/templates/admin/login.tpl');
+        $output = $this->context->smarty->fetch($this->module->getLocalPath() .
+            'views/templates/admin/login.tpl');
         $this->context->smarty->assign('content', $output);
         $this->setTemplate('content.tpl');
     }
@@ -136,7 +139,8 @@ class AdminChannelEngineController extends ModuleAdminController
             'admin_sync_link' => $syncUrl
         ]);
 
-        $output = $this->context->smarty->fetch($this->module->getLocalPath() . 'views/templates/admin/sync.tpl');
+        $output = $this->context->smarty->fetch($this->module->getLocalPath() .
+            'views/templates/admin/sync.tpl');
 
         $this->context->smarty->assign('content', $output);
 

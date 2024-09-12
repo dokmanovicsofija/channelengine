@@ -13,7 +13,8 @@ use Exception;
 class ServiceRegistry extends Singleton
 {
     /**
-     * @var array An associative array to hold registered services, with keys as service names and values as service instances.
+     * @var array An associative array to hold registered services, with keys as service names and
+     * values as service instances.
      */
     private static $services = [];
 

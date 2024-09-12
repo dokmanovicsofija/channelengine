@@ -72,7 +72,8 @@ class ProductRepository implements ProductRepositoryInterface
 
         $coverImage = Image::getCover($product->id);
         $imageUrl = $coverImage
-            ? Context::getContext()->link->getImageLink($product->link_rewrite, $coverImage['id_image'], 'home_default')
+            ? Context::getContext()->link->getImageLink($product->link_rewrite,
+                $coverImage['id_image'], 'home_default')
             : 'path/to/default-image.jpg';
 
         return new ProductDomainModel(

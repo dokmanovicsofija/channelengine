@@ -14,7 +14,8 @@ use Sofija\Channelengine\Utility\ServiceRegistry;
  * Class AdminProductController
  *
  * Controller for managing product synchronization with ChannelEngine in the PrestaShop admin panel.
- * Extends the default PrestaShop ModuleAdminController to handle actions like displaying the sync page and starting the product sync process.
+ * Extends the default PrestaShop ModuleAdminController to handle actions like displaying the sync page and
+ * starting the product sync process.
  */
 class AdminProductController extends ModuleAdminController
 {
@@ -60,7 +61,8 @@ class AdminProductController extends ModuleAdminController
             'admin_sync_link' => $this->context->link->getAdminLink('AdminProduct') . '&action=startSync',
         ]);
 
-        $output = $this->context->smarty->fetch($this->module->getLocalPath() . 'views/templates/admin/sync.tpl');
+        $output = $this->context->smarty->fetch($this->module->getLocalPath() .
+            'views/templates/admin/sync.tpl');
         $this->context->smarty->assign('content', $output);
         $this->setTemplate('content.tpl');
     }
@@ -80,7 +82,8 @@ class AdminProductController extends ModuleAdminController
             if (isset($response['StatusCode']) && $response['StatusCode'] == 200 && $response['Success'] === true) {
                 $this->sendJsonResponse(true, 'Product synchronization successful!');
             } else {
-                $this->sendJsonResponse(false, 'Synchronization failed: ' . ($response['Message'] ?? 'Unknown error'));
+                $this->sendJsonResponse(false, 'Synchronization failed: ' .
+                    ($response['Message'] ?? 'Unknown error'));
             }
         } catch (Exception $e) {
             $this->sendJsonResponse(false, 'An error occurred: ' . $e->getMessage());
