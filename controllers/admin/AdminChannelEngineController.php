@@ -107,6 +107,7 @@ class AdminChannelEngineController extends ModuleAdminController
 
         if (empty($accountName) || empty($apiKey)) {
             $this->displayLogin('Account name and API key cannot be empty.');
+
             return;
         }
 
@@ -114,6 +115,7 @@ class AdminChannelEngineController extends ModuleAdminController
 
         if (!$loginService->handleLogin($apiKey, $accountName)) {
             $this->displayLogin('Login failed. Please check your credentials.');
+
             return;
         }
 

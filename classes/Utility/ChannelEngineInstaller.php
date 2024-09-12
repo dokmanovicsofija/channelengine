@@ -21,6 +21,12 @@ class ChannelEngineInstaller
      */
     private $module;
 
+    /**
+     * @var array A list of hooks that the module will register to during installation.
+     *
+     * These hooks allow the module to execute specific actions when certain events occur
+     * in PrestaShop, such as displaying content in the back office header or updating a product.
+     */
     private static $hooks = array(
         'displayBackOfficeHeader',
         'actionProductUpdate'

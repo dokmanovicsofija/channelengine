@@ -28,6 +28,7 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $idLang = (int)Context::getContext()->language->id;
         $products = Product::getProducts($idLang, 0, 0, 'id_product', 'ASC');
+        $domainProducts = [];
 
         foreach ($products as &$product) {
             $coverImage = Image::getCover($product['id_product']);

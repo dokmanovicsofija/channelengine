@@ -56,7 +56,8 @@ class ProductService implements ProductSyncServiceInterface
      * Synchronizes a single product with ChannelEngine by its product ID.
      *
      * This method retrieves the product from the repository, formats it, and then sends it to ChannelEngine.
-     * If the product is not found, it throws an exception. The response from ChannelEngine is logged for debugging purposes.
+     * If the product is not found, it throws an exception. The response from ChannelEngine is logged for debugging
+     * purposes.
      *
      * @param int $productId The ID of the product to be synchronized.
      * @return array The response from ChannelEngine after attempting to sync the product.

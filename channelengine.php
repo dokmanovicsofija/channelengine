@@ -53,6 +53,7 @@ class ChannelEngine extends Module
     public function install(): bool
     {
         $installer = new ChannelEngineInstaller($this);
+
         return parent::install() && $installer->install();
     }
 
@@ -65,6 +66,7 @@ class ChannelEngine extends Module
     public function uninstall(): bool
     {
         $installer = new ChannelEngineInstaller($this);
+
         return parent::uninstall() && $installer->uninstall();
     }
 
